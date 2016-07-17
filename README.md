@@ -32,10 +32,11 @@ targets:
 The easiest way to do so is to add the following to your `WORKSPACE` file:
 
 ```python
-git_repository(
+http_archive(
     name = "io_bazel_rules_groovy",
-    remote = "https://github.com/bazelbuild/rules_groovy.git",
-    tag = "0.0.1",
+    url = "https://github.com/bazelbuild/rules_groovy/archive/0.0.1.tar.gz",
+    sha256 = "45bac348730bb061548fe3769677b64f2906f6e9fb88c795687646b128296bb1",
+    strip_prefix = "rules_groovy-0.0.1",
 )
 load("@io_bazel_rules_groovy//groovy:groovy.bzl", "groovy_repositories")
 groovy_repositories()
