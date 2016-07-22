@@ -48,7 +48,8 @@ def _groovy_jar_impl(ctx):
   # Discover all of the generated class files and write their paths to a file.
   # Run the paths through sed to trim out everything before the package root so
   # that the paths match how they should look in the jar file.
-  cmd += "find . -name '*.class' | sed 's:^./%s/::' > %s/class_list\n" % (
+  cmd += "find %s -name '*.class' | sed 's:^%s/::' > %s/class_list\n" % (
+      build_output,
       build_output,
       build_output,
   )
