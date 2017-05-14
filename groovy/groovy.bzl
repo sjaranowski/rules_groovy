@@ -385,7 +385,7 @@ def groovy_repositories():
     build_file_content = """
 filegroup(
     name = "sdk",
-    srcs = glob(["groovy-2.4.4/**"], exclude_directories=0),
+    srcs = glob(["groovy-2.4.4/**"]),
     visibility = ["//visibility:public"],
 )
 java_import(
