@@ -74,6 +74,7 @@ load("@io_bazel_rules_groovy//groovy:groovy.bzl", "groovy_library")
 groovy_library(
     name = "groovylib",
     srcs = glob(["*.groovy"]),
+    visibility = ["//visibility:public"],
     deps = [
         ":javalib",
     ],
@@ -108,9 +109,9 @@ load("@io_bazel_rules_groovy//groovy:groovy.bzl", "groovy_binary")
 groovy_binary(
     name = "GroovyApp",
     srcs = glob(["*.groovy"]),
-    main_class = "GroovyApp",
+    main_class = "app.GroovyApp",
     deps = [
-         "//src/main/groovy/lib",
+         "//src/main/groovy/lib:groovylib",
     ],
 )
 ```
