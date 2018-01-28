@@ -34,9 +34,9 @@ The easiest way to do so is to add the following to your `WORKSPACE` file:
 ```python
 http_archive(
     name = "io_bazel_rules_groovy",
-    url = "https://github.com/bazelbuild/rules_groovy/archive/0.0.1.tar.gz",
-    sha256 = "45bac348730bb061548fe3769677b64f2906f6e9fb88c795687646b128296bb1",
-    strip_prefix = "rules_groovy-0.0.1",
+    url = "https://github.com/bazelbuild/rules_groovy/archive/0.0.3.tar.gz",
+    sha256 = "3194a45a6c3d2947380efb08e2fa5634c67eafa215368f4258ae60381f05dea5",
+    strip_prefix = "rules_groovy-0.0.3",
 )
 load("@io_bazel_rules_groovy//groovy:groovy.bzl", "groovy_repositories")
 groovy_repositories()
@@ -139,7 +139,7 @@ groovy_test(
 
 If you're using JUnit or Spock, see
 <a href="#groovy_junit_test">groovy_junit_test</a> or
-<a href="#spock_test>spock_test</a> for wrappers that make testing with these
+<a href="#spock_test">spock_test</a> for wrappers that make testing with these
 systems slightly more convenient.
 
 <a name="groovy_library"></a>
