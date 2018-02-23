@@ -1,3 +1,5 @@
+[![Build status](https://badge.buildkite.com/5745498acd50b9811f2bdb2fc26defd3c3f01bed96ffe6fb5a.svg)](https://buildkite.com/bazel/rules-groovy-postsubmit)
+
 # Groovy Rules
 
 <div class="toc">
