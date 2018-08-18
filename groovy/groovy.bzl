@@ -29,7 +29,7 @@ def _groovy_jar_impl(ctx):
   # Set up the output directory and set JAVA_HOME
   cmd = "rm -rf %s\n" % build_output
   cmd += "mkdir -p %s\n" % build_output
-  cmd += "export JAVA_HOME=external/local_jdk\n"
+  cmd += "export JAVA_HOME=%s\n" % ctx.attr._jdk[java_common.JavaRuntimeInfo].java_home
 
   # Set GROOVY_HOME by scanning through the groovy SDK to find the license file,
   # which should be at the root of the SDK.
@@ -94,7 +94,7 @@ _groovy_jar = rule(
             default = Label("//external:groovy-sdk"),
         ),
         "_jdk": attr.label(
-            default = Label("//tools/defaults:jdk"),
+            default = Label("@bazel_tools//tools/jdk:current_java_runtime"),
         ),
         "_zipper": attr.label(
             default = Label("@bazel_tools//tools/zip:zipper"),
@@ -243,7 +243,7 @@ _groovy_test = rule(
             default = Label("//external:groovy-sdk"),
         ),
         "_jdk": attr.label(
-            default = Label("//tools/defaults:jdk"),
+            default = Label("@bazel_tools//tools/jdk:current_java_runtime"),
         ),
         "_implicit_deps": attr.label_list(default = [
             Label("//external:junit"),
