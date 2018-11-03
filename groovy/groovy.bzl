@@ -12,6 +12,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
+
 def _groovy_jar_impl(ctx):
   """Creates a .jar file from Groovy sources. Users should rely on
   groovy_library instead of using this rule directly.
@@ -390,7 +392,7 @@ def spock_test(
   )
 
 def groovy_repositories():
-  native.new_http_archive(
+  http_archive(
     name = "groovy_sdk_artifact",
     url = "http://bazel-mirror.storage.googleapis.com/dl.bintray.com/groovy/maven/apache-groovy-binary-2.4.4.zip",
     sha256 = "a7cc1e5315a14ea38db1b2b9ce0792e35174161141a6a3e2ef49b7b2788c258c",
