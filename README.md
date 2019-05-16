@@ -36,9 +36,9 @@ The easiest way to do so is to add the following to your `WORKSPACE` file:
 ```python
 http_archive(
     name = "io_bazel_rules_groovy",
-    url = "https://github.com/bazelbuild/rules_groovy/archive/0.0.3.tar.gz",
-    sha256 = "3194a45a6c3d2947380efb08e2fa5634c67eafa215368f4258ae60381f05dea5",
-    strip_prefix = "rules_groovy-0.0.3",
+    url = "https://github.com/bazelbuild/rules_groovy/archive/0.0.4.tar.gz",
+    sha256 = "2677c74b68c0143adb42ea97aab0d7b22f0948805f38097bfb2060ef8f8be3df",
+    strip_prefix = "rules_groovy-0.0.4",
 )
 load("@io_bazel_rules_groovy//groovy:groovy.bzl", "groovy_repositories")
 groovy_repositories()
