@@ -151,7 +151,7 @@ def groovy_and_java_library(name, srcs = [], testonly = 0, deps = [], **kwargs):
             testonly = testonly,
             deps = deps,
         )
-        groovy_deps += [name + "-java"]
+        groovy_deps = depset(groovy_deps + [name + "-java"])
         jars += ["lib" + name + "-java.jar"]
 
     # Put all .groovy sources in a groovy_library depending on the java_library
