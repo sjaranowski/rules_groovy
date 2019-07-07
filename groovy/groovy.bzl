@@ -213,10 +213,14 @@ def _groovy_test_impl(ctx):
     ]
 
     # Extract all transitive dependencies
-    all_deps = depset(ctx.files.deps + ctx.files._implicit_deps + groovy_sdk_jars)
-    for this_dep in ctx.attr.deps:
-        if hasattr(this_dep, "java"):
-            all_deps += this_dep.java.transitive_runtime_deps
+    all_deps = depset(
+        ctx.files.deps + ctx.files._implicit_deps + groovy_sdk_jars,
+        transitive = [
+            dep[JavaInfo].transitive_runtime_deps
+            for dep in ctx.attr.deps
+            if JavaInfo in dep
+        ],
+    )
 
     # Infer a class name from each src file
     classes = [path_to_class(src.path) for src in ctx.files.srcs]
