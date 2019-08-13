@@ -405,19 +405,19 @@ def groovy_repositories():
     http_archive(
         name = "groovy_sdk_artifact",
         urls = [
-            "https://bazel-mirror.storage.googleapis.com/dl.bintray.com/groovy/maven/apache-groovy-binary-2.5.7.zip",
-            "https://dl.bintray.com/groovy/maven/apache-groovy-binary-2.5.7.zip"
+            "https://mirror.bazel.build/dl.bintray.com/groovy/maven/apache-groovy-binary-2.5.8.zip",
+            "https://dl.bintray.com/groovy/maven/apache-groovy-binary-2.5.8.zip"
         ],
-        sha256 = "3d905dfe4f739c8c0d9dd181e6687ac816e451bf327a9ec0740da473cfebc9e0",
+        sha256 = "49fb14b98f9fed1744781e4383cf8bff76440032f58eb5fabdc9e67a5daa8742",
         build_file_content = """
 filegroup(
     name = "sdk",
-    srcs = glob(["groovy-2.5.7/**"]),
+    srcs = glob(["groovy-2.5.8/**"]),
     visibility = ["//visibility:public"],
 )
 java_import(
     name = "groovy",
-    jars = ["groovy-2.5.7/lib/groovy-2.5.7.jar"],
+    jars = ["groovy-2.5.8/lib/groovy-2.5.8.jar"],
     visibility = ["//visibility:public"],
 )
 """,
@@ -433,13 +433,13 @@ java_import(
 
     native.maven_server(
         name = "groovy_maven_server",
-        url = "https://bazel-mirror.storage.googleapis.com/repo1.maven.org/maven2",
+        url = "https://mirror.bazel.build/repo1.maven.org/maven2",
     )
 
     jvm_maven_import_external(
         name = "junit_artifact",
         artifact = "junit:junit:4.12",
-        server_urls = ["https://bazel-mirror.storage.googleapis.com/repo1.maven.org/maven2"],
+        server_urls = ["https://mirror.bazel.build/repo1.maven.org/maven2"],
         licenses = ["notice"],
     )
     native.bind(
@@ -450,7 +450,7 @@ java_import(
     jvm_maven_import_external(
         name = "spock_artifact",
         artifact = "org.spockframework:spock-core:1.3-groovy-2.5",
-        server_urls = ["https://bazel-mirror.storage.googleapis.com/repo1.maven.org/maven2"],
+        server_urls = ["https://mirror.bazel.build/repo1.maven.org/maven2"],
         licenses = ["notice"],
     )
     native.bind(
