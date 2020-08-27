@@ -195,7 +195,10 @@ def groovy_binary(name, main_class, srcs = [], testonly = 0, deps = [], **kwargs
         **kwargs
     )
 
-def path_to_class(path):
+def path_to_class(path, project_path):
+    if path.startswith(project_path):
+        path = path[len(project_path):]
+
     if path.startswith("src/test/groovy/"):
         return path[len("src/test/groovy/"):path.index(".groovy")].replace("/", ".")
     elif path.startswith("src/test/java/"):
@@ -222,7 +225,8 @@ def _groovy_test_impl(ctx):
     )
 
     # Infer a class name from each src file
-    classes = [path_to_class(src.path) for src in ctx.files.srcs]
+    project_path = ctx.attr.generator_location[:ctx.attr.generator_location.index("BUILD:")]
+    classes = [path_to_class(src.path, project_path) for src in ctx.files.srcs]
 
     # Write a file that executes JUnit on the inferred classes
     cmd = "external/local_jdk/bin/java %s -cp %s org.junit.runner.JUnitCore %s\n" % (
