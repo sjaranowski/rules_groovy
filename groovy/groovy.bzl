@@ -12,6 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+load("@bazel_skylib//lib:paths.bzl", "paths")
 load("@rules_java//java:defs.bzl", "java_binary", "java_import", "java_library")
 
 def _groovy_jar_impl(ctx):
@@ -206,6 +207,19 @@ def path_to_class(path, project_path):
     else:
         fail("groovy_test sources must be under src/test/java or src/test/groovy")
 
+def runfiles_root(ctx):
+    return "${TEST_SRCDIR}/%s" % ctx.workspace_name
+
+def _java_bin(ctx):
+    java_path = str(ctx.attr._jdk[java_common.JavaRuntimeInfo].java_home)
+
+    if paths.is_absolute(java_path):
+        javabin = java_path
+    else:
+        runfiles_root_var = runfiles_root(ctx)
+        javabin = "%s/%s" % (runfiles_root_var, java_path)
+    return javabin + "/bin/java"
+
 def _groovy_test_impl(ctx):
     # Collect jars from the Groovy sdk
     groovy_sdk_jars = [
@@ -225,15 +239,20 @@ def _groovy_test_impl(ctx):
     )
 
     # Infer a class name from each src file
+    java_bin = _java_bin(ctx)
+
     project_path = ctx.attr.generator_location[:ctx.attr.generator_location.index("BUILD:")]
     classes = [path_to_class(src.path, project_path) for src in ctx.files.srcs]
-
+    
     # Write a file that executes JUnit on the inferred classes
-    cmd = "external/local_jdk/bin/java %s -cp %s org.junit.runner.JUnitCore %s\n" % (
+    cmd = "%s %s -cp %s org.junit.runner.JUnitCore %s\n" % (
+        java_bin,
         " ".join(ctx.attr.jvm_flags),
         ":".join([dep.short_path for dep in all_deps.to_list()]),
         " ".join(classes),
     )
+
+    # Return all dependencies needed to run the tests
     ctx.actions.write(
         output = ctx.outputs.executable,
         content = cmd,
