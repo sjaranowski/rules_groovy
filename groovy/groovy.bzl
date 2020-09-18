@@ -374,15 +374,19 @@ def spock_test(
         resources = [],
         jvm_flags = [],
         size = "small",
-        tags = []):
+        tags = [],
+        include_external_deps = 1):
     groovy_lib_deps = deps + [
         "//external:junit",
         "//external:spock",
     ]
-    test_deps = deps + [
-        "//external:junit",
-        "//external:spock",
-    ]
+
+    test_deps = deps
+    if include_external_deps:
+        test_deps = deps + [
+            "//external:junit",
+            "//external:spock",
+        ]
 
     if len(specs) == 0:
         fail("Must provide at least one file in specs")
@@ -393,10 +397,7 @@ def spock_test(
             name = name + "-javalib",
             srcs = java_srcs,
             testonly = 1,
-            deps = deps + [
-                "//external:junit",
-                "//external:spock",
-            ],
+            deps = test_deps,
         )
         groovy_lib_deps += [name + "-javalib"]
         test_deps += [name + "-javalib"]
